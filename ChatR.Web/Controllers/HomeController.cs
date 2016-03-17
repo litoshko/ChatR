@@ -11,11 +11,15 @@ namespace ChatR.Web.Controllers
         // GET: Home
         public ActionResult Index()
         {
+            ViewBag.Action = "Index";
+
             return View();
         }
 
         public ActionResult Chat()
         {
+            ViewBag.Action = "Chat";
+
             return View();
         }
     }

@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace ChatR.Web
 {
@@ -16,7 +15,16 @@ namespace ChatR.Web
 
             bundles.Add(new ScriptBundle("~/bundles/signalr").Include(
                         "~/Scripts/jquery.signalR-{version}.js"));
-            
+
+            bundles.Add(new ScriptBundle("~/bundles/angular").Include(
+                        "~/Scripts/angular.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/angularSignalrHub").Include(
+                        "~/Scripts/angular-signalr-hub.min.js"));
+
+            bundles.Add(new ScriptBundle("~/bundles/angularApp")
+                .IncludeDirectory("~/Scripts/app", "*.js", true));
+
 
             // Use the development version of Modernizr to develop with and learn from. Then, when you're
             // ready for production, use the build tool at http://modernizr.com to pick only the tests you need.
