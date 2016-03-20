@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = "Shape";
+}
+@section styles {
+    <style>
+        .shape {
+            display: block;
+            width: 100px;
+            height: 100px;
+            border-radius: 50px;
+            background-color: #00FF00;
+        }
+        .shape-intersect {
+            background-color: #FF0000;
+        }
+    </style>
+}
+
+<h2>Shape</h2>
+
+
+<div id="shape"></div>
+
+@section scripts {
+    <script>
+        $(function() {
+            var moveShapeHub = $.connection.moveShapeHub,
+                $shape = $("#shape"),
+                shapeModel = {
+                    left: 0,
+                    top: 0
+                };
+            $shape.addClass("shape");
+            moveShapeHub.client.updateShape = function(model) {
+                shapeModel = model;
+                $shape.offset(shapeModel);
+            };
+            $.connection.hub.start().done(function() {
+                $shape.draggable({
+                    drag: function() {
+                        shapeModel = $shape.offset();
+                        moveShapeHub.server.updateModel(shapeModel);
+                    }
+                });
+            });
+        });
+    </script>
+
+}
