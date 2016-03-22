@@ -17,7 +17,7 @@
                            name="userName"
                            placeholder="Anonimous"
                            required
-                           ng-model="username" />
+                           ng-model="vm.username" />
                 </div>
             </div>
             <div class="form-group"
@@ -31,7 +31,7 @@
                            name="newMessage"
                            placeholder="your message here"
                            required
-                           ng-model="message" />
+                           ng-model="vm.message" />
                 </div>
             </div>
             <div class="form-group">
@@ -39,7 +39,7 @@
                     <button class="btn btn-default"
                             type="submit"
                             ng-disabled="messageForm.newMessage.$error.required"
-                            ng-click="sendChat();">
+                            ng-click="vm.sendChat();">
                         Send
                     </button>
                 </div>
@@ -47,7 +47,9 @@
         </form>
         <ul class="list-group">
             <li class="list-group-item"
-                ng-repeat="c in chats.getMessages()"><strong>{{c.UserName}}: </strong>{{c.ChatMessage}}</li>
+                ng-repeat="c in vm.chats.getMessages()">
+                <strong>{{c.UserName}}: </strong>{{c.ChatMessage}}
+            </li>
         </ul>
     </div>
 </div>

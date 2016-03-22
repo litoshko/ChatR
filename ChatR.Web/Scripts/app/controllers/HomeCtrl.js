@@ -5,18 +5,19 @@
         .module('app')
         .controller('HomeCtrl', HomeCtrl);
 
-    HomeCtrl.$inject = ['$scope', 'signalRService']; 
+    HomeCtrl.$inject = ['signalRService']; 
 
 // ReSharper disable once InconsistentNaming
-    function HomeCtrl($scope, signalRService) {
+    function HomeCtrl(signalRService) {
         /* jshint validthis:true */
         var vm = this;
 
-        $scope.chats = signalRService;
-        $scope.username = undefined;
-        $scope.sendChat = function () {
-            $scope.chats.sendMessage($scope.username, $scope.message);
-            $('#message').val('').focus();
+        vm.chats = signalRService;
+        vm.username = undefined;
+        vm.sendChat = function () {
+            vm.chats.sendMessage(vm.username, vm.message);
+            vm.message = '';
+            $('#newMessage').focus();
         }
 
     }
