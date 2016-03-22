@@ -11,6 +11,7 @@
             border-radius: 50px;
             background-color: #00FF00;
         }
+
         .shape-intersect {
             background-color: #FF0000;
         }
@@ -24,26 +25,42 @@
 
 @section scripts {
     <script>
-        $(function() {
+        $(function () {
             var moveShapeHub = $.connection.moveShapeHub,
                 $shape = $("#shape"),
+                // Send a maximum of 100 messages per second
+                // (mouse movements trigger a lot of messages)
+                messageFrequency = 100,
+                // Determine how often to send messages in
+                // time to abide by the messageFrequency
+                updateRate = 1000 / messageFrequency,
                 shapeModel = {
                     left: 0,
                     top: 0
-                };
+                },
+                moved = false;
             $shape.addClass("shape");
-            moveShapeHub.client.updateShape = function(model) {
+            moveShapeHub.client.updateShape = function (model) {
                 shapeModel = model;
                 $shape.offset(shapeModel);
             };
-            $.connection.hub.start().done(function() {
+            $.connection.hub.start().done(function () {
                 $shape.draggable({
-                    drag: function() {
+                    drag: function () {
                         shapeModel = $shape.offset();
-                        moveShapeHub.server.updateModel(shapeModel);
+                        moved = true;
                     }
                 });
+                // Start the client side server update interval
+                setInterval(updateServerModel, updateRate);
             });
+            function updateServerModel() {
+                // Only update server if we have a new movement
+                if (moved) {
+                    moveShapeHub.server.updateModel(shapeModel);
+                    moved = false;
+                }
+            }
         });
     </script>
 
