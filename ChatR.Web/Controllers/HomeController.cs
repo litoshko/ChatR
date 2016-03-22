@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using System.Web.Mvc;
 
 namespace ChatR.Web.Controllers
 {
@@ -19,6 +15,13 @@ namespace ChatR.Web.Controllers
         public ActionResult Chat()
         {
             ViewBag.Action = "Chat";
+
+            return View();
+        }
+
+        public ActionResult Shape()
+        {
+            ViewBag.Action = "Shape";
 
             return View();
         }
