@@ -3,7 +3,7 @@ using System.Threading;
 using Microsoft.AspNet.SignalR;
 using Newtonsoft.Json;
 
-namespace MoveShapeDemo
+namespace ChatR.Web.Hubs
 {
     public class Broadcaster
     {

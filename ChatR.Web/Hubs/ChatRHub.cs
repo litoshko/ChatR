@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNet.SignalR;
 
-// ReSharper disable once CheckNamespace
-namespace ChatR.Web
+namespace ChatR.Web.Hubs
 {
     public class ChatRHub : Hub
     {
