@@ -5,9 +5,9 @@
         .module('app')
         .factory('signalRService', signalRService);
 
-    signalRService.$inject = ['$rootScope', 'Hub'];
+    signalRService.$inject = ['$rootScope', 'Hub', 'chatService'];
 
-    function signalRService($rootScope, Hub) {
+    function signalRService($rootScope, Hub, chatService) {
 
         // API declaration
         var service = {
@@ -16,7 +16,7 @@
         };
 
         var messages = [];
-
+        
         //Chat ViewModel
         var Chat = function (chat) {
             if (!chat) chat = {};
@@ -28,6 +28,16 @@
 
             return Chat;
         }
+
+        // Initalize messages
+        chatService.getMessages().then(function (response) {
+            response.data.forEach(function(item) {
+                messages.push(new Chat({ UserName: item.Name, ChatMessage: item.Text }));
+            });
+        },
+        function(response) {
+            console.log("Server error: " + response.status);
+        });
 
         //Hub setup
         var hub = new Hub("chatRHub", {
@@ -46,7 +56,6 @@
                     hub.connection.start();
                 }
             },
-            transport: 'webSockets',
             logging: true
         });
 
