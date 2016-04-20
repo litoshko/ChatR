@@ -45,7 +45,8 @@
                 </div>
             </div>
         </form>
-        <ul class="list-group">
+        <ul class="list-group"
+            ng-cloak>
             <li class="list-group-item"
                 ng-repeat="c in vm.chats.getMessages()">
                 <strong>{{c.UserName}}: </strong>{{c.ChatMessage}}
