@@ -1,4 +1,6 @@
-﻿using System.Web.Mvc;
+﻿using System;
+using System.Net;
+using System.Web.Mvc;
 using ChatR.Web.Services;
 
 namespace ChatR.Web.Controllers
@@ -30,8 +32,17 @@ namespace ChatR.Web.Controllers
         [HttpGet]
         public JsonResult GetMessages()
         {
-            var result = Json(_chatStorage.GetAllMessages(), JsonRequestBehavior.AllowGet);
-            return result;
+            try
+            {
+                var result = Json(_chatStorage.GetAllMessages(), JsonRequestBehavior.AllowGet);
+
+                return result;
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = (int) HttpStatusCode.InternalServerError;
+                return Json($"{ex.Source}: {ex.Message}", JsonRequestBehavior.AllowGet);
+            }
         }
 
         public ActionResult Shape()

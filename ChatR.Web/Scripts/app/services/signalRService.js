@@ -31,13 +31,13 @@
 
         // Initalize messages
         chatService.getMessages().then(function (response) {
-            response.data.forEach(function(item) {
-                messages.push(new Chat({ UserName: item.Name, ChatMessage: item.Text }));
+                response.data.forEach(function(item) {
+                    messages.push(new Chat({ UserName: item.Name, ChatMessage: item.Text }));
+                });
+            },
+            function (response) {
+                console.log("Server error: " + response.status);
             });
-        },
-        function(response) {
-            console.log("Server error: " + response.status);
-        });
 
         //Hub setup
         var hub = new Hub("chatRHub", {
